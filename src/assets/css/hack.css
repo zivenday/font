@@ -1,0 +1,82 @@
+body {
+    color:#333;
+    font-family:meiryo, Arial, Helvetica, sans-serif;
+    font-size:12px;
+    height:100%;
+    margin:0 auto;
+    padding:0;
+    width:100%;
+}
+
+html,body,div,dl,dt,dd,ul,ol,li,th,td {
+    margin:0;
+    padding:0;
+}
+
+img,body,html {
+    border:0;
+}
+
+address,caption,cite,code,dfn,em,strong,th,var {
+    font-style:normal;
+    font-weight:400;
+}
+
+ol,ul {
+    list-style:none;
+}
+
+caption,th {
+    text-align:left;
+}
+
+q:before,q:after {
+    content:'';
+}
+
+a,a:visited {
+    color:#4e7aa7;
+    text-decoration:none;
+}
+
+a:hover,a:active {
+    color:#5d92c9;
+    text-decoration:none;
+}
+
+.left {
+    float:left;
+}
+
+.right {
+    float:right;
+}
+
+.center {
+    margin:0 auto;
+    text-align:center;
+}
+
+.bring-to-top {
+    position:relative;
+    z-index:500;
+}
+
+.clear {
+    clear:both;
+}
+
+.hidden {
+    display:none;
+}
+
+.fit-parent {
+    height:100%;
+    width:100%;
+}
+
+.inline-block{
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+}
