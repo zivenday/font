@@ -78,7 +78,7 @@ export default {
             for (var i = formObj.length - 2; i >= 0; i--) {
                 jsonData[formObj[i].prop] = formObj[i].fieldValue;
             }
-            this.checkUser(jsonData);
+            this.checkUser(jsonData);    
         },
         checkUser(jsonData) {
             var res='';
@@ -91,12 +91,15 @@ export default {
                             message: res.message,
                             type: 'success'
                         });
+                        //进入主页
+                        this.$router.push({ name: 'main'})
                     } else {
                         this.$message.error(res.message);
                     }
+
                 }).catch((response) => {
                     // response.json()
-                    alert('登录失败！')
+                    alert('处理过程异常=>'+response)
                 })
         }
 
