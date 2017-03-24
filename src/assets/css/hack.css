@@ -16,7 +16,9 @@ html,body,div,dl,dt,dd,ul,ol,li,th,td {
 img,body,html {
     border:0;
 }
-
+body,html{
+    height: 100%;
+}
 address,caption,cite,code,dfn,em,strong,th,var {
     font-style:normal;
     font-weight:400;
