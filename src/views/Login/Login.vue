@@ -78,7 +78,8 @@ export default {
             for (var i = formObj.length - 2; i >= 0; i--) {
                 jsonData[formObj[i].prop] = formObj[i].fieldValue;
             }
-            this.checkUser(jsonData);    
+            // this.checkUser(jsonData); 
+            this.$router.push({ name: 'main'})   
         },
         checkUser(jsonData) {
             var res='';
