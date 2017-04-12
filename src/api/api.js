@@ -1,2 +1,5 @@
-let apiUrl='';
-export const removeFeedback=param=>{this.$resource(`${apiUrl}/feedback/remove`).remove({id:param})}
+
+import axios from 'axios';
+let apiUrl='/api';
+export const removeFeedback=params=>{  return axios.get(`${apiUrl}/feedbacks/remove`,{params:params})}
+export const queryFeedbacks=params=>{  return axios.get(`${apiUrl}/feedbacks/query`,{params:params})}
