@@ -14,6 +14,6 @@ export default {
 /*各个浏览器统一*/
 @import url(assets/css/hack.css);
  #app {
- 	height: 100%
+ 	height: 100%;
  }
 </style>

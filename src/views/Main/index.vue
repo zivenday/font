@@ -7,9 +7,8 @@
         </div>
         <!-- 侧边栏 -->
         <div class="main-container">
-    
             <div class="main-container__slider">
-                <el-menu :style="{height:heightSize+'px'}"
+                <el-menu class="el-menu-vertical"
                          @open="handleOpen"
                          @select="handleSelect"
                          @close="handleClose">
@@ -21,6 +20,7 @@
                     </el-submenu>
                     </el-submenu>
                     <el-menu-item index="/main/pano"><i class="el-icon-menu"></i>全景图管理</el-menu-item>
+                    <el-menu-item index="/main/video"><i class="el-icon-menu"></i>VR视频管理</el-menu-item>
                     <el-menu-item index="/main/feedback"><i class="el-icon-setting"></i>反馈管理</el-menu-item>
                 </el-menu>
             </div>
@@ -37,28 +37,8 @@
 export default {
     data() {
         return {
-            heightSize: (window.innerHeight - 60) || (document.documentElement.clientHeight - 60) || (document.body.clientHeight - 60)
         }
     },
-    mounted() {
-        const that = this
-        window.onresize = () => {
-            return (() => {
-                that.heightSize = (window.innerHeight - 60) || (document.documentElement.clientHeight - 60) || (document.body.clientHeight - 60)
-            })()
-        }
-    },
-    //     watch: {
-    //     screenWidth (val) {
-    //         this.screenWidth = val
-    //     }
-    // },
-    // computed: {
-    //     heightSize: function() {
-    //         //对于绝大部分浏览器使用window.innerWidth即可获取宽度，使用document.documentElement.clientWidth || document.body.clientWidth 为了实现对IE6，7的支持
-    //         return (window.innerHeight - 60) || (document.documentElement.clientHeight - 60) || (document.body.clientHeight - 60)
-    //     }
-    // },
     methods: {
         handleOpen(key, keyPath) {
             console.log(key, keyPath);
@@ -79,6 +59,7 @@ export default {
 <style lang="scss">
 .main {
     height: 100%;
+    flex-direction: column;
     .statu-navbar {
         height: 60px;
         background-color: grey;
@@ -92,14 +73,23 @@ export default {
         }
     }
     &-container {
-        display: flex;
+        display:flex;
+        position: absolute;
+        top: 60px;
+        bottom: 0px;
+        left: 0px;
+        width:100%;
         &__slider {
-            width: 10%;
-            min-width: 150px;
+            width: 200px;
+            flex: 0 0 200px;
+            .el-menu-vertical {
+                height: 100%
+            }
         }
         &__show {
-            width: 90%;
-            padding-top:15px;
+            flex: 1;
+            box-sizing: border-box;
+            padding: 20px;
         }
     }
 }

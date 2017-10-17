@@ -3,9 +3,10 @@
         <div class="search-form">
             <el-form :inline="true"
                      :model="formInline"
-                     class="demo-form-inline">
+                     class="form-inline">
                 <el-form-item label="用户名">
-                    <el-input v-model="formInline.name"
+                    <el-input id="el-input__change"
+                              v-model="formInline.name"
                               placeholder="用户名"></el-input>
                 </el-form-item>
                 <el-form-item label="关键字">
@@ -27,73 +28,89 @@
                 </el-form-item>
             </el-form>
         </div>
-        <div class="feedback__table">
-            <el-table :data="feedbacks"
-                      :v-loading="loading"
-                      border
-                      style="width: 100%">
-                <el-table-column type="selection"
-                                 width="55">
-                </el-table-column>
-                <el-table-column label="编号"
-                                 width="100">
-                    <template scope="scope">
-                        <el-icon name="id"></el-icon>
-                        <span style="margin-left: 10px">{{ scope.row.id }}</span>
-                    </template>
-                </el-table-column>
-                <el-table-column label="日期"
-                                 width="180">
-                    <template scope="scope">
-                        <el-icon name="time"></el-icon>
-                        <span style="margin-left: 10px">{{ scope.row.date }}</span>
-                    </template>
-                </el-table-column>
-                <el-table-column label="姓名"
-                                 width="180">
-                    <template scope="scope">
-                        <el-popover trigger="hover"
-                                    placement="top">
-                            <p>姓名: {{ scope.row.name }}</p>
-                            <p>反馈信息: {{ scope.row.info }}</p>
-                            <div slot="reference"
-                                 class="name-wrapper">
-                                <el-tag>{{ scope.row.name }}</el-tag>
-                            </div>
-                        </el-popover>
-                    </template>
-                </el-table-column>
-                <el-table-column label="反馈信息"
-                                 width="400">
-                    <template scope="scope">
-                        <span style="margin-left: 10px">{{ scope.row.info }}</span>
-                    </template>
-                </el-table-column>
-                <el-table-column label="操作">
-                    <template scope="scope">
-                        <el-button size="small"
-                                   type="danger"
-                                   @click="handleDelete(scope.$index, scope.row)">删除</el-button>
-                    </template>
-                </el-table-column>
-            </el-table>
+        <div class="feedback__container">
+            <div class="feedback__table">
+                <el-table :data="feedbacks"
+                          :v-loading="loading"
+                          height="641"
+                          stripe
+                          border
+                          style="width: 100%"
+                          :default-sort="{prop:'id',order:'descending'}">
+                    <el-table-column type="selection"
+                                     sortable
+                                     width="55">
+                    </el-table-column>
+                    <el-table-column label="编号"
+                                     prop='id'
+                                     sortable
+                                     width="100">
+                        <template scope="scope">
+                            <el-icon name="id"></el-icon>
+                            <span style="margin-left: 10px">{{ scope.row.id }}</span>
+                        </template>
+                    </el-table-column>
+                    <el-table-column label="日期"
+                                     prop='date'
+                                     sortable
+                                     width="150">
+                        <template scope="scope">
+                            <el-icon name="time"></el-icon>
+                            <span style="margin-left: 10px">{{ scope.row.date }}</span>
+                        </template>
+                    </el-table-column>
+                    <el-table-column label="姓名">
+                        <template scope="scope">
+                            <el-popover trigger="hover"
+                                        placement="top">
+                                <p>姓名: {{ scope.row.name }}</p>
+                                <p>反馈信息: {{ scope.row.info }}</p>
+                                <div slot="reference"
+                                     class="name-wrapper">
+                                    <el-tag>{{ scope.row.name }}</el-tag>
+                                </div>
+                            </el-popover>
+                        </template>
+                    </el-table-column>
+                    <el-table-column label="反馈信息"
+                                     width="500">
+                        <template scope="scope">
+                            <span style="margin-left: 10px">{{ scope.row.info }}</span>
+                        </template>
+                    </el-table-column>
     
+                    <el-table-column label="操作"
+                                     width="200">
+                        <template scope="scope">
+                            <el-button size="small"
+                                       type="primary"
+                                       @click="handleClick(scope.$index, scope.row)">查看</el-button>
+                            <el-button size="small"
+                                       type="danger"
+                                       @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+                        </template>
+                    </el-table-column>
+                </el-table>
+    
+            </div>
         </div>
         <div class="feedback__pagination">
             <div class="block">
-                <el-pagination @size-change="handleSizeChange"
-                               @current-change="handleCurrentChange"
-                               :page-sizes=page.sizes
-                               layout="total, sizes, prev, pager, next"
-                               :total=page.total>
-                </el-pagination>
+                <el-pagination
+      @current-change="handleCurrentChange"
+      :current-page="currentPage"
+      :page-sizes="[100, 200, 300, 400]"
+      :page-size="100"
+      layout="total, sizes, prev, pager, next, jumper"
+      :total="400">
+    </el-pagination>
             </div>
         </div>
     </div>
 </template>
 <script>
 import { queryFeedbacks, removeFeedback } from 'api/api';
-
+import 'common/index';
 export default {
     data() {
         return {
@@ -102,6 +119,7 @@ export default {
                 keywords: '',
                 daterange: ''
             },
+            currentPage:1,
             loading: false,
             pickerOptions2: {
                 shortcuts: [{
@@ -137,11 +155,11 @@ export default {
                 bdate: '',
                 edate: '',
                 page: 1,
-                pageSize: 10
+                pageSize: 15
             },
             page: {
                 total: 0,
-                sizes: [10, 20, 30],
+                sizes: [15, 20, 25, 30],
             }
         }
     },
@@ -149,6 +167,7 @@ export default {
         this.getFeedbacks();
     },
     methods: {
+        handleCurrentChange(){},
         onSubmit() {
             this.filtr.name = this.formInline.name;
             this.filtr.kyw = this.formInline.keywords;
@@ -161,22 +180,21 @@ export default {
             let that = this;
             let param = this.filtr;
             this.loading = true;
-            queryFeedbacks(param).then(response => {
-                let res = response.data;
-                console.log(res)
-                if (res.code) {
+            queryFeedbacks({id:'',page:this.filtr.page, pageSize:this.filtr.pageSize}).then(res => {
+                 this.loading = false;
+                console.log(res.data)
+                 if (!res.data.code) {
                     that.page.total = res.data.total;
-                    that.feedbacks = res.data.feedbacks;
+                    that.feedbacks = res.data.feedbackList;
                 } else {
                     this.$message({
                         type: 'error',
-                        message: res.message
+                        message: res.data.message
                     })
-                }
-
+                } 
             })
-            this.loading = false
         },
+        handleClick(index, row) { },
         handleDelete(index, row) {
             this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
                 confirmButtonText: '确定',
@@ -209,26 +227,23 @@ export default {
         }
     }
 }
-Date.prototype.Format = function (fmt) {
-    var o = {
-        "M+": this.getMonth() + 1, //月份 
-        "d+": this.getDate(), //日 
-        "h+": this.getHours(), //小时 
-        "m+": this.getMinutes(), //分 
-        "s+": this.getSeconds(), //秒 
-        "q+": Math.floor((this.getMonth() + 3) / 3), //季度 
-        "S": this.getMilliseconds() //毫秒 
-    };
-    if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
-    for (var k in o)
-        if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
-    return fmt;
-}
+
 </script>
 <style lang="scss" scoped>
 .search-form {
     width: 1000px;
     margin: 0 auto;
+    .el-form {
+        &-item {
+            &__content {
+                .el-input {
+                    &__inner {
+                        color: red!important;
+                    }
+                }
+            }
+        }
+    }
 }
 
 .feedback {
