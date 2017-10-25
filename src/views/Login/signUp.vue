@@ -9,7 +9,7 @@
                     <el-input type="password" v-model="ruleForm.password" auto-complete="off"></el-input>
                 </el-form-item>
                 <el-form-item>
-                    <el-button @click="submit()">提交</el-button>
+                    <el-button @click="submitAction()">提交</el-button>
                 </el-form-item>
             </el-form>
         </div>
@@ -55,36 +55,17 @@ export default {
     },
     methods: {
         ...mapActions(["USER_SIGNIN"]),
-        submit() {
+        submitAction() {
             this.$refs["ruleForm"].validate((valid) => {
                 if (valid) {
-                    // this.createUser(formName);
                     signUpByPWD(this.ruleForm).then(res => {
                         if (!res.data.code) {
-                            loginByPWD(this.ruleForm).then(res => {
-                                console.log(res)
-                                let data = res.data
-                                if (!data.code) {
-                                   console.log('登录反馈',data)
-                                    if (Cookies.getJSON('user')) {
-                                         this.$message.success('登录成功！')
-                                        this.USER_SIGNIN(this.ruleForm)
-                                        this.$router.push({path:'/'})
-                                    } else {
-                                        this.$message.error('用户名或密码错误！')
-                                    }
-                                } else {
-                                    this.$message.error(data.message)
-                                }
-                                console.log(sessionStorage.getItem("user"))
-                                console.log(this.$store.state.user)
-
-                            }).catch(err => {
-                                console.log(err)
-                            })
+                           this.$router.push({path:'/'})
                         } else {
-                            console.log(res.data.message)
+                            this.$message.error(res.data.message)
                         }
+                    }).catch(err=>{
+                        this.$message.error(err.message)
                     })
                 } else {
                     console.log('error submit!!');

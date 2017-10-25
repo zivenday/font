@@ -8,7 +8,6 @@ let addInterceptor = axios => {
   axios.interceptors.request.use(
     // 在发送请求之前做某事
     config => {
-      console.log(111111)
       return config
     },
     function (error) {

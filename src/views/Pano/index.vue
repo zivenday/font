@@ -39,7 +39,7 @@
                 </el-table-column>
                 <el-table-column label="编号"
                                  width>
-                    <template scope="scope"
+                    <template slot-scope="scope"
                               width="70">
                         <el-icon name="id"></el-icon>
                         <span style="margin-left: 10px">{{ scope.row.id }}</span>
@@ -47,20 +47,20 @@
                 </el-table-column>
                 <el-table-column label="日期"
                                  width="150">
-                    <template scope="scope">
+                    <template slot-scope="scope">
                         <el-icon name="time"></el-icon>
                         <span style="margin-left: 10px">{{ scope.row.date }}</span>
                     </template>
                 </el-table-column>
                 <el-table-column label="上传者"
                                  width="150">
-                    <template scope="scope">
+                    <template slot-scope="scope">
                         <span style="margin-left: 10px">{{ scope.row.name }}</span>
                     </template>
                 </el-table-column>
                 <el-table-column label="位置"
                                  width="600">
-                    <template scope="scope">
+                    <template slot-scope="scope">
                         <span style="margin-left: 10px">{{ scope.row.location }}</span>
                     </template>
                 </el-table-column>
@@ -69,13 +69,13 @@
                                  width="150"
                                  :filters="[{ text: '房产', value: '房产' }, { text: '运动', value: '运动' }]"
                                  :filter-method="filterTag">
-                    <template scope="scope">
+                    <template slot-scope="scope">
                         <el-tag :type="scope.row.tag === '房产' ? 'primary' : 'success'"
                                 close-transition>{{scope.row.tag}}</el-tag>
                     </template>
                 </el-table-column>
                 <el-table-column label="操作">
-                    <template scope="scope">
+                    <template slot-scope="scope">
                         <el-button @click="handleClick(scope.$index, scope.row)"
                                    type="primary"
                                    size="small">查看</el-button>

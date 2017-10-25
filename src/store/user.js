@@ -8,10 +8,12 @@ const user = {
   state: Cookies.getJSON('user') || {},
   mutations: {
     [USER_SIGNIN] (state, user) {
+      console.log('state.......',state)
       // sessionStorage.setItem('user', JSON.stringify(user))
       Object.assign(state, user)
     },
     [USER_SIGNOUT] (state) {
+      console.log('state.......',state)
       // sessionStorage.removeItem('user')
       Object.keys(state).forEach(k => Vue.delete(state, k))
     }

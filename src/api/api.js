@@ -13,7 +13,7 @@ export const removeFeedback = params => {
   })
 }
 export const queryFeedbacks = params => {
-  return axios.post(`${apiUrl}/feedback/query/`+params.id,params)
+  return axios.post(`${apiUrl}/feedback`+params.id,params)
 }
 export const GetGithubOauth = () => {
   return axios.get(`${apiUrl}/user/oauthPath`)

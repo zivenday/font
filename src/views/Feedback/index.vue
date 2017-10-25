@@ -45,7 +45,7 @@
                                      prop='id'
                                      sortable
                                      width="100">
-                        <template scope="scope">
+                        <template slot-scope="scope">
                             <el-icon name="id"></el-icon>
                             <span style="margin-left: 10px">{{ scope.row.id }}</span>
                         </template>
@@ -54,13 +54,13 @@
                                      prop='date'
                                      sortable
                                      width="150">
-                        <template scope="scope">
+                        <template slot-scope="scope">
                             <el-icon name="time"></el-icon>
                             <span style="margin-left: 10px">{{ scope.row.date }}</span>
                         </template>
                     </el-table-column>
                     <el-table-column label="姓名">
-                        <template scope="scope">
+                        <template slot-scope="scope">
                             <el-popover trigger="hover"
                                         placement="top">
                                 <p>姓名: {{ scope.row.name }}</p>
@@ -74,14 +74,14 @@
                     </el-table-column>
                     <el-table-column label="反馈信息"
                                      width="500">
-                        <template scope="scope">
+                        <template slot-scope="scope">
                             <span style="margin-left: 10px">{{ scope.row.info }}</span>
                         </template>
                     </el-table-column>
     
                     <el-table-column label="操作"
                                      width="200">
-                        <template scope="scope">
+                        <template slot-scope="scope">
                             <el-button size="small"
                                        type="primary"
                                        @click="handleClick(scope.$index, scope.row)">查看</el-button>

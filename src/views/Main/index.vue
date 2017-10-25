@@ -12,16 +12,7 @@
                          @open="handleOpen"
                          @select="handleSelect"
                          @close="handleClose">
-                    <el-submenu index="/main/user">
-                        <template slot="title"><i class="el-icon-message"></i>用户管理</template>
-                        <el-menu-item index="1-1">用户查询</el-menu-item>
-                        <el-menu-item index="1-2">权限管理</el-menu-item>
-                        <el-menu-item index="1-3">个人设置</el-menu-item>
-                    </el-submenu>
-                    </el-submenu>
-                    <el-menu-item index="/main/pano"><i class="el-icon-menu"></i>全景图管理</el-menu-item>
-                    <el-menu-item index="/main/video"><i class="el-icon-menu"></i>VR视频管理</el-menu-item>
-                    <el-menu-item index="/main/feedback"><i class="el-icon-setting"></i>反馈管理</el-menu-item>
+                         <side-menu  :routes='permissionRouters' />
                 </el-menu>
             </div>
             <!-- 显示栏 -->
@@ -34,7 +25,13 @@
     </div>
 </template>
 <script>
+import { mapGetters } from 'vuex';
+import SideMenu from './SideMenu.vue';
 export default {
+    components: { SideMenu },
+    computed:{
+        ...mapGetters(['permissionRouters'])
+    },
     data() {
         return {
         }
