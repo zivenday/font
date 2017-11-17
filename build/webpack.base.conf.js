@@ -6,7 +6,7 @@ var vueLoaderConfig = require('./vue-loader.conf')
 function resolve (dir) {
   return path.join(__dirname, '..', dir)
 }
-
+var src = path.resolve(__dirname, '../src');
 module.exports = {
   entry: {
     app: ["babel-polyfill",'./src/main.js']
@@ -26,13 +26,16 @@ module.exports = {
     ],
     alias: {
       'vue$': 'vue/dist/vue.common.js',
-      'src': resolve('src'),
-      'api': resolve('src/api'),
-      'store': resolve('src/store'),
-      'common':resolve('src/common'),
-      'assets': resolve('src/assets'),
-      'components': resolve('src/components'),
-      'views': resolve('src/views')
+      '@': resolve('src'),
+      'src': path.resolve(__dirname, '../src'),
+      'assets': path.resolve(__dirname, '../src/assets'),
+      'components': path.resolve(__dirname, '../src/components'),
+      'views': path.resolve(__dirname, '../src/views'),
+      'styles': path.resolve(__dirname, '../src/styles'),
+      'api': path.resolve(__dirname, '../src/api'),
+      'utils': path.resolve(__dirname, '../src/utils'),
+      'store': path.resolve(__dirname, '../src/store'),
+      'router': path.resolve(__dirname, '../src/router'),
     }
   },
   module: {
@@ -53,7 +56,7 @@ module.exports = {
       },
       {
         test: /\.js$/,
-        loader: 'babel-loader',
+        loader: 'babel-loader?cacheDirectory',
         include: [resolve('src'), resolve('test')]
       },
       {

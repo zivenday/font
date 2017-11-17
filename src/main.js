@@ -27,10 +27,8 @@ Array.prototype.contain = function (obj) {
 const whiteList = ['/login','/signUp', '/401', '/404'] // 不重定向白名单
 const blockList=['/','/login']//登录或授权后，cookie获取用户信息，需要屏蔽路由名单
 router.beforeEach((to, from, next) => {
-  console.log('cookies', Cookies.get())
-  console.log('user....',store.state.user)
   if (Cookies.getJSON('user')) {
-    if (blockList.contain(to.path)) {
+    if (blockList.contain(to.path)) {//登录或授权后，需要屏蔽路由名单
 			router.replace({path: '/main'})
 		} else {                      
 			if (!store.getters.permissionRouters) { // 判断当前用户是否已经获得完整的可访问的路由

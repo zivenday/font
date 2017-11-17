@@ -4,14 +4,19 @@ var webpack = require('webpack')
 var config = require('../config')
 var merge = require('webpack-merge')
 var baseWebpackConfig = require('./webpack.base.conf')
+var CopyWebpackPlugin = require('copy-webpack-plugin')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
 var OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
-
-var env = process.env.NODE_ENV === 'testing'
-  ? require('../config/test.env')
-  : config.build.env
-
+var CompressionWebpackPlugin = require('compression-webpack-plugin')
+var ImageminPlugin = require('imagemin-webpack-plugin').default
+var env = process.env.NODE_ENV === 'production' ? config.build.prodEnv : config.build.sitEnv
+// var env = process.env.NODE_ENV === 'testing'
+//   ? require('../config/test.env')
+//   : config.build.env
+function resolveApp(relativePath) {
+  return path.resolve(relativePath);
+}
 var webpackConfig = merge(baseWebpackConfig, {
   module: {
     rules: utils.styleLoaders({
@@ -30,15 +35,33 @@ var webpackConfig = merge(baseWebpackConfig, {
     new webpack.DefinePlugin({
       'process.env': env
     }),
+    new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.optimize.UglifyJsPlugin({
+      comments: false,   
       compress: {
         warnings: false
-      },
-      sourceMap: true
+      }
     }),
+    
     // extract css into its own file
     new ExtractTextPlugin({
       filename: utils.assetsPath('css/[name].[contenthash].css')
+    }),
+    new CompressionWebpackPlugin({ //gzip 压缩
+			asset: '[path].gz[query]',
+			algorithm: 'gzip',
+			test: new RegExp(
+				'\\.(js|css)$'    //压缩 js 与 css
+			),
+			threshold: 10240,
+			minRatio: 0.8
+        }),
+        //图片压缩
+         new ImageminPlugin({
+      disable: process.env.NODE_ENV !== 'production', // Disable during development
+      pngquant: {
+        quality: '95-100'
+      }
     }),
     // Compress extracted CSS. We are using this plugin so that possible
     // duplicated CSS from different components can be deduped.
@@ -52,13 +75,22 @@ var webpackConfig = merge(baseWebpackConfig, {
         : config.build.index,
       template: 'index.html',
       inject: true,
+      // favicon: resolveApp('favicon.ico'),
       minify: {
         removeComments: true,
         collapseWhitespace: true,
-        removeAttributeQuotes: true
+        removeRedundantAttributes: true,
+        useShortDoctype: true,
+        removeEmptyAttributes: true,
+        removeStyleLinkTypeAttributes: true,
+        keepClosingSlash: true,
+        minifyJS: true,
+        minifyCSS: true,
+        minifyURLs: true
         // more options:
         // https://github.com/kangax/html-minifier#options-quick-reference
       },
+      path:config.build.staticPath,
       // necessary to consistently work with multiple chunks via CommonsChunkPlugin
       chunksSortMode: 'dependency'
     }),
@@ -82,6 +114,16 @@ var webpackConfig = merge(baseWebpackConfig, {
       name: 'manifest',
       chunks: ['vendor']
     })
+  //   new webpack.DllPlugin({
+  //     path: path.join(__dirname, "dll", "../dist/[name]-manifest.json"),
+  //     //The manifest is very important, it gives other Webpack configurations 
+  //     //a map to your already built modules. Path represent where to generate manifest file
+  //     name: utils.assetsPath('js/[name].[chunkhash].js'),
+  //     // the name is the name of the entry
+  //     context: path.resolve(__dirname, "../dist/client")
+  //     // context of requests in the manifest file, defaults to the webpack context
+  // }),
+  // n
   ]
 })
 
