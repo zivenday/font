@@ -251,6 +251,10 @@
   display: inline-block;
 }
 
+.el-menu--collapse .el-menu .el-submenu {
+  min-width: 200px;
+}
+
 .el-menu--collapse .el-submenu {
   position: relative
 }

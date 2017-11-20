@@ -16,4 +16,8 @@ export default {
  #app {
  	height: 100%;
  }
+ li{
+ outline: 0px!important;
+ }
+    
 </style>

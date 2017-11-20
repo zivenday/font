@@ -2,15 +2,26 @@
     <div class='main'>
         <!-- 顶栏 -->
         <div class="statu-navbar">
-            <span class="statu-navbar__logo"></span>
-            <div class="statu-navbar__user"></div>
+            <div class="statu-navbar__user"><el-dropdown>
+  <span class="el-dropdown-link">
+    这里头部下拉菜单<i class="el-icon-arrow-down el-icon--right"></i>
+  </span>
+  <el-dropdown-menu slot="dropdown">
+    <el-dropdown-item>功能一</el-dropdown-item>
+    <el-dropdown-item>功能二</el-dropdown-item>
+    <el-dropdown-item>功能三</el-dropdown-item>
+    <el-dropdown-item disabled>不可点击功能四</el-dropdown-item>
+    <el-dropdown-item divided>分割线隔开功能五</el-dropdown-item>
+  </el-dropdown-menu>
+</el-dropdown></div>
+            
         </div>
         <!-- 侧边栏 -->
         <div class="main-container">
             <div class="main-container__slider">
                 <el-menu class="el-menu-vertical"
                          @open="handleOpen"
-                         @select="handleSelect"
+                       @select="handleSelect"
                          @close="handleClose">
                          <side-menu  :routes='permissionRouters' />
                 </el-menu>
@@ -28,6 +39,7 @@
 import { mapGetters } from 'vuex';
 import SideMenu from './SideMenu.vue';
 export default {
+    name:'main',
     components: { SideMenu },
     computed:{
         ...mapGetters(['permissionRouters'])
@@ -48,7 +60,7 @@ export default {
         },
         handleResize() {
             console.log(1);
-        }
+        } 
     }
 }
 </script>
@@ -59,16 +71,24 @@ export default {
     flex-direction: column;
     .statu-navbar {
         height: 60px;
-        background-color: grey;
-        .statu-navbar__logo {
-            display: inline-block;
-            height: 32px;
-            width: 140px;
-            background-image: url('../../assets/imgs/top-logo.png');
-            margin-top: 14px;
-            margin-left: 60px;
+        background-color: #409EFF;
+        .statu-navbar__user {
+            float: right;
+            margin-top: 20px;
+            margin-right: 50px
+
         }
+       
     }
+     .statu-navbar:before{
+            position: absolute;
+            content:'这里系统名称或logo';
+            padding-top:15px;
+            padding-left: 10px;
+            font-size: 20px;
+            width: 400px;
+            height: 60px;
+        }
     &-container {
         display:flex;
         position: absolute;
@@ -90,4 +110,14 @@ export default {
         }
     }
 }
+
+  .el-dropdown {
+    vertical-align: top;
+  }
+  .el-dropdown + .el-dropdown {
+    margin-left: 15px;
+  }
+  .el-icon-arrow-down {
+    font-size: 12px;
+  }
 </style>

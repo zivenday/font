@@ -83,6 +83,6 @@ export const permissionRoutesMap=[{
   ]
 }]
 export default new Router({
-  mode: 'history',
+  // mode: 'history',
   routes: defaultRoutesMap
 })

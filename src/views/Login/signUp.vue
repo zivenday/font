@@ -62,10 +62,10 @@ export default {
                         if (!res.data.code) {
                            this.$router.push({path:'/'})
                         } else {
-                            this.$message.error(res.data.message)
+                            this.$message({type:'error',message:res.data.message})
                         }
                     }).catch(err=>{
-                        this.$message.error(err.message)
+                        this.$message({type:'error',message:err.message})
                     })
                 } else {
                     console.log('error submit!!');

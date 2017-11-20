@@ -1102,6 +1102,9 @@
 .el-date-picker.has-time {
     min-width: 324px;
 }
+.el-date-picker.has-time .el-picker-panel__body-wrapper {
+    position: relative;
+}
 .el-date-picker__editor-wrap {
     position: relative;
     display: table-cell;
